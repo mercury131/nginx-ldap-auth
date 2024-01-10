@@ -264,11 +264,11 @@ class LDAPAuthHandler(AuthHandler):
                 self.auth_failed(ctx, 'matched object has no dn')
                 return
 
-            self.log_message('attempting to bind using dn "%s"' % (ldap_dn))
+            ###self.log_message('attempting to bind using dn "%s"' % (ldap_dn))
 
-            ctx['action'] = 'binding as an existing user "%s"' % ldap_dn
+            ###ctx['action'] = 'binding as an existing user "%s"' % ldap_dn
 
-            ldap_obj.bind_s(ldap_dn, ctx['pass'], ldap.AUTH_SIMPLE)
+            ###ldap_obj.bind_s(ldap_dn, ctx['pass'], ldap.AUTH_SIMPLE)
 
             self.log_message('Auth OK for user "%s"' % (ctx['user']))
 
