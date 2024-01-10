@@ -333,6 +333,18 @@ if __name__ == '__main__':
         default="", help="HTTP cookie name to set in (Default: unset)")
 
     args = parser.parse_args()
+    env_binddn = os.environ.get('binddn', None)
+    if env_binddn is not None:
+        binddn=env_basedn
+    else:
+        binddn=args.binddn
+        
+    env_bindpasswd = os.environ.get('bindpasswd', None)
+    if env_bindpasswd is not None:
+        bindpasswd=env_bindpasswd
+    else:
+        bindpasswd=args.bindpw   
+        
     global Listen
     Listen = (args.host, args.port)
     auth_params = {
@@ -342,8 +354,8 @@ if __name__ == '__main__':
              'disable_referrals': ('X-Ldap-DisableReferrals', args.disable_referrals),
              'basedn': ('X-Ldap-BaseDN', args.basedn),
              'template': ('X-Ldap-Template', args.filter),
-             'binddn': ('X-Ldap-BindDN', args.binddn),
-             'bindpasswd': ('X-Ldap-BindPass', args.bindpw),
+             'binddn': ('X-Ldap-BindDN', binddn),
+             'bindpasswd': ('X-Ldap-BindPass', bindpasswd),
              'cookiename': ('X-CookieName', args.cookie)
     }
     LDAPAuthHandler.set_params(auth_params)
