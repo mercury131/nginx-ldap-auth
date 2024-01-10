@@ -263,12 +263,14 @@ class LDAPAuthHandler(AuthHandler):
             if ldap_dn == None:
                 self.auth_failed(ctx, 'matched object has no dn')
                 return
-
-            ###self.log_message('attempting to bind using dn "%s"' % (ldap_dn))
-
-            ###ctx['action'] = 'binding as an existing user "%s"' % ldap_dn
-
-            ###ldap_obj.bind_s(ldap_dn, ctx['pass'], ldap.AUTH_SIMPLE)
+            
+            use_spnego = os.environ.get('use_spnego', None)
+            if use_spnego is not None:
+                self.log_message("note: Using Kerberos auth (SPNEGO)" )
+            else:           
+                self.log_message('attempting to bind using dn "%s"' % (ldap_dn))
+                ctx['action'] = 'binding as an existing user "%s"' % ldap_dn
+                ldap_obj.bind_s(ldap_dn, ctx['pass'], ldap.AUTH_SIMPLE)
 
             self.log_message('Auth OK for user "%s"' % (ctx['user']))
 
