@@ -335,7 +335,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     env_binddn = os.environ.get('binddn', None)
     if env_binddn is not None:
-        binddn=env_basedn
+        binddn=env_binddn
     else:
         binddn=args.binddn
         
