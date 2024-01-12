@@ -1,4 +1,4 @@
-# PLEASE note that this project is *not designed or hardened* for production. It is intended as a model for such connector daemons
+# nginx-ldap-auth service adapted for use in conjunction with the module nginx [SPNEGO](https://github.com/stnoonan/spnego-http-auth-nginx-module)
 
 ## The nginx-ldap-auth project
 
