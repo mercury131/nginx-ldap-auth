@@ -213,7 +213,11 @@ class LDAPAuthHandler(AuthHandler):
             ssl_ignore = os.environ.get('ssl_ignore', None)
             if ssl_ignore is not None:
                 ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+                ldap_obj.set_option(ldap.OPT_REFERRALS, 0)
+                ldap_obj.set_option(ldap.OPT_X_TLS, ldap.OPT_X_TLS_DEMAND)
+                ldap_obj.set_option(ldap.OPT_X_TLS_DEMAND, True)
             ctx['action'] = 'initializing LDAP connection'
+            ldap_obj.set_option(ldap.OPT_DEBUG_LEVEL, 255)
             ldap_obj = ldap.initialize(ctx['url']);
 
             # Python-ldap module documentation advises to always
