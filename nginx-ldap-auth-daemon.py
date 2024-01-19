@@ -213,6 +213,7 @@ class LDAPAuthHandler(AuthHandler):
             ssl_ignore = os.environ.get('ssl_ignore', None)
             CACERTFILE = os.environ.get('CACERTFILE', None)
             if ssl_ignore is not None:
+                print("SET SSL Settings")
                 ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT,ldap.OPT_X_TLS_DEMAND)
                 ldap_obj.set_option(ldap.OPT_REFERRALS, 0)
                 ldap_obj.set_option(ldap.OPT_X_TLS, ldap.OPT_X_TLS_DEMAND)
