@@ -211,11 +211,14 @@ class LDAPAuthHandler(AuthHandler):
                 self.log_message('LDAP baseDN is not set!')
                 return
             ssl_ignore = os.environ.get('ssl_ignore', None)
+            CACERTFILE = os.environ.get('CACERTFILE', None)
             if ssl_ignore is not None:
-                ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+                ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT,ldap.OPT_X_TLS_DEMAND)
                 ldap_obj.set_option(ldap.OPT_REFERRALS, 0)
                 ldap_obj.set_option(ldap.OPT_X_TLS, ldap.OPT_X_TLS_DEMAND)
-                ldap_obj.set_option(ldap.OPT_X_TLS_DEMAND, True)
+                ldap_obj.set_option(ldap.OPT_X_TLS_CACERTFILE,CACERTFILE)
+                ldap_obj.set_option(ldap.OPT_X_TLS_NEWCTX,0)
+                ldap_obj.start_tls_s()
             ctx['action'] = 'initializing LDAP connection'
             ldap_obj.set_option(ldap.OPT_DEBUG_LEVEL, 255)
             ldap_obj = ldap.initialize(ctx['url']);
